@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+require_relative "environment"
+require "driver"
+require "modules/island"
+require "console_ui"
+
+binding.pry

@@ -1,4 +1,5 @@
 require "game_view"
+require "modules/island/location"
 
 IslandWorld = Struct.new(
   :location_id,
@@ -18,6 +19,13 @@ module Island
 
   def create
     world = IslandWorld.new
+    world.map = {
+      beach: SimpleLocation.new(
+        name: "Cove Shores",
+        text: "You stand alone on the beach. It's sunny, slightly breezey and fairly calm.\nGulls can be heard in the distance.",
+      ),
+    }
+    world.location_id = :beach
     return world
   end
 
