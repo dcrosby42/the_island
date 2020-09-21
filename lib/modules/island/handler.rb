@@ -6,7 +6,11 @@ class Handler
   end
 
   def match(action)
-    action.first.to_s == verb.to_s
+    verb.to_s == action.first.to_s
+  end
+
+  def soft_match(action)
+    verb.to_s.start_with?(action.first.to_s)
   end
 
   def handle(world, action)

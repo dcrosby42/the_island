@@ -86,6 +86,10 @@ module Island
   private
 
   def get_handler(world, action)
-    world.handlers.find { |h| h.match(action) }
+    handler = world.handlers.find { |h| h.match(action) }
+    if not handler
+      handler = world.handlers.find { |h| h.soft_match(action) }
+    end
+    handler
   end
 end
