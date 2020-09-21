@@ -1,3 +1,3 @@
 class SimpleLocation
-  rattr_initialize :name, :text
+  vattr_initialize [:id!, :name!, :text, :exits]
 end
