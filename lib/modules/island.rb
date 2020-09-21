@@ -5,13 +5,11 @@ require "modules/island/go"
 require "modules/island/look"
 
 class IslandWorld
-  attr_accessor :state, :map, :log, :bag, :handlers
+  attr_accessor :state, :map, :log, :bag
 
   def initialize
     @map = {}
     @state = {}
-    @handlers = []
-
     # @log = GameLog.new
     # @bag = GameInventory.new
     # puts "huh?"
@@ -56,21 +54,17 @@ module Island
     world.map[3] = point
     world.state[:location_id] = 1
 
-    world.handlers = [
-      Go.new,
-      Look.new,
-    ]
     return Look.new.handle(world, nil)
   end
 
   def update(world, action)
-    handler = get_handler world, action
+    handler = Handler.find action
     if handler
       return handler.handle(world, action)
     else
       # For convenience, let's see if the user was using a "go" abbreviation.
       action.unshift "go"
-      handler = get_handler world, action
+      handler = Handler.find action
       if handler
         # yup.
         return handler.handle(world, action)
@@ -81,15 +75,5 @@ module Island
 
   def get_prompt(world)
     Prompt.new(label: "", term: ">")
-  end
-
-  private
-
-  def get_handler(world, action)
-    handler = world.handlers.find { |h| h.match(action) }
-    if not handler
-      handler = world.handlers.find { |h| h.soft_match(action) }
-    end
-    handler
   end
 end

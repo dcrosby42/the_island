@@ -5,6 +5,22 @@ class Handler
     end
   end
 
+  def self.descendants
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
+  end
+
+  def self.known
+    @known ||= self.descendants.map do |clazz| clazz.new end
+  end
+
+  def self.find(action)
+    handler = known.find { |h| h.match(action) }
+    if not handler
+      handler = known.find { |h| h.soft_match(action) }
+    end
+    handler
+  end
+
   def match(action)
     verb.to_s == action.first.to_s
   end
