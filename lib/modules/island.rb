@@ -1,12 +1,17 @@
 require "game_view"
 require "modules/island/location"
+require "modules/island/handler"
+require "modules/island/go"
+require "modules/island/look"
 
 class IslandWorld
-  attr_reader :state, :map, :log, :bag
+  attr_accessor :state, :map, :log, :bag, :handlers
 
   def initialize
     @map = {}
     @state = {}
+    @handlers = []
+
     # @log = GameLog.new
     # @bag = GameInventory.new
     # puts "huh?"
@@ -51,48 +56,36 @@ module Island
     world.map[3] = point
     world.state[:location_id] = 1
 
-    return world, look(world)
+    world.handlers = [
+      Go.new,
+      Look.new,
+    ]
+    return Look.new.handle(world, nil)
   end
 
   def update(world, action)
-    case action.first
-    when "go"
-      fx = go(world, action)
-      return world, fx
-    when "look"
-      return world, look(world, action)
+    handler = get_handler world, action
+    if handler
+      return handler.handle(world, action)
+    else
+      # For convenience, let's see if the user was using a "go" abbreviation.
+      action.unshift "go"
+      handler = get_handler world, action
+      if handler
+        # yup.
+        return handler.handle(world, action)
+      end
     end
-    world
+    return world, []
   end
 
   def get_prompt(world)
-    Prompt.new(label: "", term: "?")
+    Prompt.new(label: "", term: ">")
   end
 
   private
 
-  def look(world, action = nil)
-    loc = world.map[world.state[:location_id]]
-    text = "#{loc.name}\n\n#{loc.text}"
-    [SideEffect::Message.new(text)]
-  end
-
-  def go(world, action)
-    dir = action[1]
-    if dir.nil?
-      return [SideEffect::Message.new("Go where?")]
-    end
-    loc = current_location(world)
-    ex = loc.exits.find do |e| e[:dir] == dir end
-    if ex
-      world.state[:location_id] = ex[:location_id]
-      return look(world)
-    else
-      return [SideEffect::Message.new("Cannot go '#{dir}' from here.")]
-    end
-  end
-
-  def current_location(world)
-    world.map[world.state[:location_id]]
+  def get_handler(world, action)
+    world.handlers.find { |h| h.match(action) }
   end
 end
