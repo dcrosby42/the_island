@@ -1,13 +1,6 @@
-require "game_view"
+require "prompt"
+require "commands"
 require "modules/island/location"
-require "modules/island/map_helper"
-require "modules/island/item_helper"
-require "modules/island/command"
-require "modules/island/go"
-require "modules/island/look"
-require "modules/island/take"
-require "modules/island/drop"
-require "modules/island/inventory"
 require "modules/island/items"
 
 class Inventory

@@ -1,5 +1,5 @@
 require "readline"
-require "game_view"
+require "prompt"
 
 class ConsoleUI
   def line(str = "")
