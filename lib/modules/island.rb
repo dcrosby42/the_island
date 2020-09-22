@@ -1,10 +1,12 @@
 require "game_view"
 require "modules/island/location"
 require "modules/island/map_helper"
+require "modules/island/item_helper"
 require "modules/island/command"
 require "modules/island/go"
 require "modules/island/look"
 require "modules/island/take"
+require "modules/island/drop"
 require "modules/island/inventory"
 require "modules/island/items"
 
@@ -40,11 +42,12 @@ module Island
       name: "Cove Shores",
       text: "You stand alone on the beach. It's sunny, slightly breezey and fairly calm.\nGulls can be heard in the distance.",
       exits: [
-        { dir: "east", location_id: 2 },
+        { dir: "west", location_id: 2 },
         { dir: "north", location_id: 3 },
       ],
       items: [
         DriftWood.new,
+        SeaShell.new,
       ],
     )
     shallows = SimpleLocation.new(
@@ -52,8 +55,11 @@ module Island
       name: "Cove Shallows",
       text: "You're waste deep in glittering blue water. Briney waves lap at your waste, and you're concerned your possesions may be getting drenched.",
       exits: [
-        { dir: "west", location_id: 1 },
+        { dir: "east", location_id: 1 },
         { dir: "north", location_id: 3 },
+      ],
+      items: [
+        SeaShell.new,
       ],
     )
     point = SimpleLocation.new(
@@ -62,6 +68,9 @@ module Island
       text: "You're at the northern extent of this tiny island.\nHere, the eastward beach ends amidst tumbled rocks and reeds.",
       exits: [
         { dir: "south", location_id: 1 },
+      ],
+      items: [
+        Flint.new,
       ],
     )
 
