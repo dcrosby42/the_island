@@ -2,7 +2,7 @@ module ItemHelper
   def find_item(items, subject)
     idx = nil
     case subject
-    when /^\d+$/
+    when /^\d+$/, Integer
       # Find by numeric index (1-based)
       idx = subject.to_i - 1
     else

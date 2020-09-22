@@ -13,17 +13,32 @@ class Take < Command
       if local_items.empty?
         return world, [SideEffect::Message.new("Take what?")]
       end
-      subject = "1"
+      subject = 1
     end
 
-    item = take_item(local_items, subject)
-    if item
-      world.player.inventory.items.push(item)
-      msg = "OK. #{item.look} added to inventory."
+    if String === subject and subject.downcase == "all"
+      fx = []
+      local_items.length.times do
+        msg = acquire(world, local_items, 1)
+        fx << SideEffect::Message.new(msg)
+      end
+      return world, fx
     end
 
-    msg ||= "Couldn't get #{subject}"
+    msg = acquire(world, local_items, subject)
 
     return world, [SideEffect::Message.new(msg)]
+  end
+
+  private
+
+  def acquire(world, items, subject)
+    item = take_item(items, subject)
+    if item
+      world.player.inventory.items.push(item)
+      return "OK. #{item.look} added to inventory."
+    else
+      return "Couldn't get #{subject}"
+    end
   end
 end
