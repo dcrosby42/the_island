@@ -1,4 +1,4 @@
-class Handler
+class Command
   def self.verb(vsym)
     define_method :verb do
       vsym
@@ -14,11 +14,11 @@ class Handler
   end
 
   def self.find(action)
-    handler = known.find { |h| h.match(action) }
-    if not handler
-      handler = known.find { |h| h.soft_match(action) }
+    command = known.find { |c| c.match(action) }
+    if not command
+      command = known.find { |c| c.soft_match(action) }
     end
-    handler
+    command
   end
 
   def match(action)
@@ -29,7 +29,7 @@ class Handler
     verb.to_s.start_with?(action.first.to_s)
   end
 
-  def handle(world, action)
+  def run(world, action)
     return world, []
   end
 end

@@ -1,7 +1,7 @@
-class Go < Handler
+class Go < Command
   verb :go
 
-  def handle(world, action)
+  def run(world, action)
     dir = action[1]
     if dir.nil?
       return world, [SideEffect::Message.new("Go where?")]
@@ -16,7 +16,7 @@ class Go < Handler
     end
     if ex
       world.state[:location_id] = ex[:location_id]
-      return Look.new.handle(world, nil)
+      return Look.new.run(world, nil)
     else
       return world, [SideEffect::Message.new("Cannot go '#{dir}' from here.")]
     end

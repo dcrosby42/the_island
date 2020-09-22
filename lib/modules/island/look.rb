@@ -1,7 +1,7 @@
-class Look < Handler
+class Look < Command
   verb :look
 
-  def handle(world, action = nil)
+  def run(world, action = nil)
     loc = world.map[world.state[:location_id]]
     text = "You are at #{loc.name}.\n#{loc.text}"
 

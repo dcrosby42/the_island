@@ -1,6 +1,6 @@
 require "game_view"
 require "modules/island/location"
-require "modules/island/handler"
+require "modules/island/command"
 require "modules/island/go"
 require "modules/island/look"
 require "modules/island/inventory"
@@ -68,20 +68,20 @@ module Island
     world.map[3] = point
     world.state[:location_id] = 1
 
-    return Look.new.handle(world, nil)
+    return Look.new.run(world, nil)
   end
 
   def update(world, action)
-    handler = Handler.find action
-    if handler
-      return handler.handle(world, action)
+    command = Command.find action
+    if command
+      return command.run(world, action)
     else
       # For convenience, let's see if the user was using a "go" abbreviation.
       action.unshift "go"
-      handler = Handler.find action
-      if handler
+      command = Command.find action
+      if command
         # yup.
-        return handler.handle(world, action)
+        return command.run(world, action)
       end
     end
     return world, []

@@ -1,7 +1,7 @@
-class Inventory < Handler
+class Inventory < Command
   verb :inventory
 
-  def handle(world, action)
+  def run(world, action)
     items = world.player.inventory.items
     invtext = "(empty)"
     if items and !items.empty?
