@@ -1,8 +1,10 @@
 require "game_view"
 require "modules/island/location"
+require "modules/island/map_helper"
 require "modules/island/command"
 require "modules/island/go"
 require "modules/island/look"
+require "modules/island/take"
 require "modules/island/inventory"
 require "modules/island/items"
 

@@ -1,4 +1,5 @@
 class Go < Command
+  include MapHelper
   verb :go
 
   def run(world, action)
@@ -7,7 +8,7 @@ class Go < Command
       return world, [SideEffect::Message.new("Go where?")]
     end
 
-    loc = world.map[world.state[:location_id]]
+    loc = current_location(world)
 
     ex = loc.exits.find do |e| e[:dir] == dir end
     if not ex

@@ -5,7 +5,7 @@ class Look < Command
     loc = world.map[world.state[:location_id]]
     text = "You are at #{loc.name}.\n#{loc.text}"
 
-    if loc.items
+    if loc.items and !loc.items.empty?
       list = Item.format_list(loc.items)
       text += "\n\nHere you can see:\n#{list}"
     end

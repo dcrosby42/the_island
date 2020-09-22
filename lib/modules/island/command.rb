@@ -1,7 +1,7 @@
 class Command
-  def self.verb(vsym)
-    define_method :verb do
-      vsym
+  class << self
+    def verb(*syms)
+      define_method :verbs do syms end
     end
   end
 
@@ -22,11 +22,11 @@ class Command
   end
 
   def match(action)
-    verb.to_s == action.first.to_s
+    (verbs.find do |verb| verb.to_s == action.first.to_s end) != nil
   end
 
   def soft_match(action)
-    verb.to_s.start_with?(action.first.to_s)
+    (verbs.find do |verb| verb.to_s.start_with?(action.first.to_s) end) != nil
   end
 
   def run(world, action)
