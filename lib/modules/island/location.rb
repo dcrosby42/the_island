@@ -1,3 +1,3 @@
 class SimpleLocation
-  vattr_initialize [:id!, :name!, :text, :exits]
+  vattr_initialize [:id!, :name!, :text, :exits, :items]
 end

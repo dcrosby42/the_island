@@ -3,13 +3,24 @@ require "modules/island/location"
 require "modules/island/handler"
 require "modules/island/go"
 require "modules/island/look"
+require "modules/island/inventory"
+require "modules/island/items"
+
+class Inventory
+  vattr_initialize [:items]
+end
+
+class Player
+  vattr_initialize [:inventory]
+end
 
 class IslandWorld
-  attr_accessor :state, :map, :log, :bag
+  attr_accessor :state, :map, :log, :bag, :player
 
   def initialize
     @map = {}
     @state = {}
+    @player = Player.new(inventory: Inventory.new(items: []))
     # @log = GameLog.new
     # @bag = GameInventory.new
     # puts "huh?"
@@ -29,6 +40,9 @@ module Island
       exits: [
         { dir: "east", location_id: 2 },
         { dir: "north", location_id: 3 },
+      ],
+      items: [
+        DriftWood.new,
       ],
     )
     shallows = SimpleLocation.new(
