@@ -2,7 +2,7 @@ class Take < Command
   include MapHelper
   include ItemHelper
 
-  verb :take, :get
+  verb :take, :get, :t
 
   def run(world, action)
     subject = action[1]

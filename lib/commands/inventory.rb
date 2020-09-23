@@ -1,5 +1,5 @@
 class Inventory < Command
-  verb :inventory
+  verb :inventory, :i
 
   def run(world, action)
     items = world.player.inventory.items

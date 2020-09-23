@@ -1,9 +1,13 @@
 class Go < Command
   include MapHelper
-  verb :go
+  verb :go, :north, :east, :south, :west, :n, :e, :s, :w
 
   def run(world, action)
-    dir = action[1]
+    if action.first =~ /^go?/i
+      action.shift
+    end
+
+    dir = action.first
     if dir.nil?
       return world, [SideEffect::Message.new('Go where?')]
     end

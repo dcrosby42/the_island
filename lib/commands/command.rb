@@ -1,41 +1,58 @@
-require 'descendents'
+require 'descendants'
+require 'string_distance'
 
 class Command
-  extend Descendents
+  extend Descendants
 
   class << self
-    # Meta: Command subclasses need to define one or more "verbse" for themselves.
+    # Meta: Command subclasses need to define one or more "verbs" for themselves.
     def verb(*syms)
-      define_method :verbs do syms end
+      @verbs = syms
     end
+
+    # def verb(*syms)
+    #   define_method :verbs do syms end
+    # end
+
+    attr_reader :verbs
 
     private
 
-    def descendent_instances
-      @descendent_instances ||= self.descendants.map do |clazz| clazz.new end
+    def descendant_instances
+      @descendant_instances ||= self.descendants.map do |clazz| clazz.new end
     end
   end
 
   # Find a Command implementation that matches the given action.
   # Attempts matching via #match, and failing that, re-searches using #soft_match
   def self.find(action)
-    command = descendent_instances.find { |c| c.match(action) }
-    if not command
-      command = descendent_instances.find { |c| c.soft_match(action) }
+    word = action.first.to_s.downcase
+    search_results = descendants.flat_map do |clazz|
+      clazz.verbs.map do |verb|
+        verb_str = verb.to_s.downcase
+        {
+          verb: verb_str,
+          command: clazz,
+          ldist: StringDistance.damerau_levenshtein_distance(verb_str, word),
+          lcs_size: StringDistance.lcs_length(verb_str, word),
+        }
+      end
+    end.sort do |a, b|
+      if b[:lcs_size] == a[:lcs_size]
+        a[:ldist] <=> b[:ldist]
+      else
+        b[:lcs_size] <=> a[:lcs_size]
+      end
     end
-    command
+    # debug_search_results search_results
+    return search_results.first[:command].new
   end
 
-  # Returns true if the action's first word is an exact match for this Command's verb
-  # or one of its synonyms.
-  def match(action)
-    (verbs.find do |verb| verb.to_s == action.first.to_s end) != nil
-  end
-
-  # Returns true if the action's first word matches the START of this Command's verb
-  # or one of its synonyms.
-  def soft_match(action)
-    (verbs.find do |verb| verb.to_s.start_with?(action.first.to_s) end) != nil
+  # XXX
+  def self.debug_search_results(search_results)
+    search_results.each do |sr|
+      puts "#{sr[:lcs_size]} #{sr[:ldist]} #{sr[:verb]} #{sr[:command].to_s}"
+    end
   end
 
   # Command subclasses must implement
