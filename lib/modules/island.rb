@@ -78,18 +78,13 @@ module Island
 
   def update(world, action)
     if command = Command.find(action)
+      # if command.verbs.first != action.first
+      #   _, *tail = action
+      #   inferred = [command.verbs.first.to_s, *tail]
+      #   puts "(#{inferred.join(' ')})"
+      # end
       return command.new.run(world, action)
     end
-    # else
-    #   # For convenience, let's see if the user was using a "go" abbreviation.
-    #   guess = ['go', *action]
-    #   if command = Command.find(guess)
-    #     # yup.
-    #     return command.run(world, guess)
-    #   else
-    #     return world, [SideEffect::Message.new("You don't know how to #{action.join(' ')}")]
-    #   end
-    # end
     return world, []
   end
 
