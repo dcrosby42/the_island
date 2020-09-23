@@ -5,7 +5,7 @@ class Go < Command
   def run(world, action)
     dir = action[1]
     if dir.nil?
-      return world, [SideEffect::Message.new("Go where?")]
+      return world, [SideEffect::Message.new('Go where?')]
     end
 
     loc = current_location(world)

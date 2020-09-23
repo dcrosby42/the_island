@@ -1,4 +1,4 @@
-require "side_effects"
+require 'side_effects'
 
 class Driver
   def initialize(game_module:, ui:)
@@ -16,22 +16,22 @@ class Driver
       case action.first
       when nil
         # nothing
-      when "quit"
+      when 'quit'
         looping = false
       else
         @state, side_effects = @module.update(@state, action)
         handle side_effects
       end
     end
-    @ui.line "Exiting!"
+    @ui.line 'Exiting!'
   end
 
   private
 
   def prompt
     pr = @module.get_prompt(@state)
-    input_str = @ui.prompt(pr) || "quit"
-    (input_str or "").split(/\s+/).map do |s| s.strip end
+    input_str = @ui.prompt(pr) || 'quit'
+    (input_str or '').split(/\s+/).map do |s| s.strip end
   end
 
   def handle(side_effects)

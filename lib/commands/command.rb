@@ -1,4 +1,4 @@
-require "descendents"
+require 'descendents'
 
 class Command
   extend Descendents

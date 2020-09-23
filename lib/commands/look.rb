@@ -5,7 +5,7 @@ class Look < Command
   include TimeHelper
 
   def run(world, action = nil)
-    text = ""
+    text = ''
 
     # Location
     loc = world.map[world.state[:location_id]]

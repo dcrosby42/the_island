@@ -1,13 +1,13 @@
-require "readline"
-require "prompt"
+require 'readline'
+require 'prompt'
 
 class ConsoleUI
-  def line(str = "")
+  def line(str = '')
     puts str
   end
 
   def prompt(pr = nil)
-    pr ||= Prompt.new(term: ">")
+    pr ||= Prompt.new(term: '>')
     Readline.readline("#{pr.label}#{pr.term} ", true)
   end
 end

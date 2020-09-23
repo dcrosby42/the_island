@@ -3,7 +3,7 @@ class Inventory < Command
 
   def run(world, action)
     items = world.player.inventory.items
-    invtext = " nothing"
+    invtext = ' nothing'
     if items and !items.empty?
       invtext = ":\n#{Item.format_list(items)}"
     end

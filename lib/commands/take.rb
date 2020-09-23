@@ -11,12 +11,12 @@ class Take < Command
 
     if !subject
       if local_items.empty?
-        return world, [SideEffect::Message.new("Take what?")]
+        return world, [SideEffect::Message.new('Take what?')]
       end
       subject = 1
     end
 
-    if String === subject and subject.downcase == "all"
+    if String === subject and subject.downcase == 'all'
       fx = []
       local_items.length.times do
         msg = acquire(world, local_items, 1)

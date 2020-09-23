@@ -7,7 +7,7 @@ class Drop < Command
   def run(world, action)
     subject = action[1]
     if !subject
-      return world, [SideEffect::Message.new("Drop what?")]
+      return world, [SideEffect::Message.new('Drop what?')]
     end
 
     # Figure out which inventory item we're talking about...

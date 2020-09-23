@@ -1,8 +1,8 @@
 task default: :run
 
 task :run do
-  ruby "bin/run"
+  ruby 'bin/run'
 end
 task :console do
-  ruby "bin/console"
+  ruby 'bin/console'
 end
