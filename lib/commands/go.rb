@@ -17,6 +17,8 @@ class Go < Command
     end
     if ex
       world.state[:location_id] = ex[:location_id]
+      world.state[:time] += 9.minutes
+
       return Look.new.run(world, nil)
     else
       return world, [SideEffect::Message.new("Cannot go '#{dir}' from here.")]

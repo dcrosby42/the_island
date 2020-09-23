@@ -1,7 +1,7 @@
-require "prompt"
-require "commands"
-require "modules/island/location"
-require "modules/island/items"
+require 'prompt'
+require 'commands'
+require 'modules/island/location'
+require 'modules/island/items'
 
 class Inventory
   vattr_initialize [:items]
@@ -19,7 +19,6 @@ class IslandWorld
     @state = {}
     @player = Player.new(inventory: Inventory.new(items: []))
     # @log = GameLog.new
-    # @bag = GameInventory.new
     # puts "huh?"
   end
 end
@@ -32,11 +31,11 @@ module Island
 
     beach = SimpleLocation.new(
       id: 1,
-      name: "Cove Shores",
+      name: 'Cove Shores',
       text: "You stand alone on the beach. It's sunny, slightly breezey and fairly calm.\nGulls can be heard in the distance.",
       exits: [
-        { dir: "west", location_id: 2 },
-        { dir: "north", location_id: 3 },
+        { dir: 'west', location_id: 2 },
+        { dir: 'north', location_id: 3 },
       ],
       items: [
         DriftWood.new,
@@ -45,11 +44,11 @@ module Island
     )
     shallows = SimpleLocation.new(
       id: 2,
-      name: "Cove Shallows",
+      name: 'Cove Shallows',
       text: "You're waste deep in glittering blue water. Briney waves lap at your waste, and you're concerned your possesions may be getting drenched.",
       exits: [
-        { dir: "east", location_id: 1 },
-        { dir: "north", location_id: 3 },
+        { dir: 'east', location_id: 1 },
+        { dir: 'north', location_id: 3 },
       ],
       items: [
         SeaShell.new,
@@ -57,10 +56,10 @@ module Island
     )
     point = SimpleLocation.new(
       id: 3,
-      name: "North Pointe",
+      name: 'North Pointe',
       text: "You're at the northern extent of this tiny island.\nHere, the eastward beach ends amidst tumbled rocks and reeds.",
       exits: [
-        { dir: "south", location_id: 1 },
+        { dir: 'south', location_id: 1 },
       ],
       items: [
         Flint.new,
@@ -72,6 +71,8 @@ module Island
     world.map[3] = point
     world.state[:location_id] = 1
 
+    world.state[:time] = Time.parse('apr 24 1652 8:00am')
+
     return Look.new.run(world, nil)
   end
 
@@ -81,17 +82,18 @@ module Island
       return command.run(world, action)
     else
       # For convenience, let's see if the user was using a "go" abbreviation.
-      action.unshift "go"
-      command = Command.find action
-      if command
+      guess = ['go', *action]
+      if command = Command.find(guess)
         # yup.
-        return command.run(world, action)
+        return command.run(world, guess)
+      else
+        return world, [SideEffect::Message.new("You don't know how to #{action.join(' ')}")]
       end
     end
     return world, []
   end
 
   def get_prompt(world)
-    Prompt.new(label: "", term: ">")
+    Prompt.new(label: '', term: '>')
   end
 end
