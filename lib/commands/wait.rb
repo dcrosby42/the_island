@@ -1,5 +1,6 @@
 class Wait < Command
   verb :wait
+  help_text %{Wait patiently for time to pass.\nEg: "wait 5 hours",  "wait 5 m"}
 
   include TimeHelper
 

@@ -1,8 +1,9 @@
 class Take < Command
+  verb :take, :get, :t
+  help_text %{Picks up an item from this location and puts it into your inventory.\nEg:\n  "take sea" (takes a seashell)\n  "take 2" (takes the second item at this location)\n  "take" (takes the first item at this location)}
+
   include MapHelper
   include ItemHelper
-
-  verb :take, :get, :t
 
   def run(world, action)
     subject = action[1]

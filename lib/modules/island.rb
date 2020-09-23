@@ -78,7 +78,7 @@ module Island
 
   def update(world, action)
     if command = Command.find(action)
-      return command.run(world, action)
+      return command.new.run(world, action)
     end
     # else
     #   # For convenience, let's see if the user was using a "go" abbreviation.

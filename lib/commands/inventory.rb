@@ -1,5 +1,6 @@
 class Inventory < Command
   verb :inventory, :i
+  help_text %{Shows a list of all the items you're carrying.}
 
   def run(world, action)
     items = world.player.inventory.items

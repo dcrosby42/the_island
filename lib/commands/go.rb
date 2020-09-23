@@ -1,6 +1,9 @@
 class Go < Command
   include MapHelper
+
   verb :go, :north, :east, :south, :west, :n, :e, :s, :w
+
+  help_text %{Go to a new location by following an available exit.\nEg:\n  "go north"\n  "go e" (means "go east")\n  "s" (means "go south")}
 
   def run(world, action)
     if action.first =~ /^go?/i

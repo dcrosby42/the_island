@@ -1,5 +1,6 @@
 class Drop < Command
-  verb :drop, :put
+  verb :drop, :put, :d
+  help_text %{Drops an item from your inventory and leaves it at this location.\nEg:\n  "drop driftwood" will let go of your driftwood.\n  "drop 2" drops the second item in your inventory.}
 
   include MapHelper
   include ItemHelper

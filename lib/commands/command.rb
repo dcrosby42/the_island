@@ -10,11 +10,12 @@ class Command
       @verbs = syms
     end
 
-    # def verb(*syms)
-    #   define_method :verbs do syms end
-    # end
+    # Meta: define a block of text for this Command's help message
+    def help_text(s)
+      @helps = s
+    end
 
-    attr_reader :verbs
+    attr_reader :verbs, :helps
 
     private
 
@@ -45,7 +46,7 @@ class Command
       end
     end
     # debug_search_results search_results
-    return search_results.first[:command].new
+    return search_results.first[:command]
   end
 
   # XXX
@@ -59,5 +60,9 @@ class Command
   # (default noop implementation)
   def run(world, action)
     raise "Command subclass #{self.class.name} does not implement #run"
+  end
+
+  def self.help
+    @helps || %{The '#{verbs.first}' command needs more info!}
   end
 end
