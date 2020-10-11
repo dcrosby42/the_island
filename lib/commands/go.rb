@@ -33,7 +33,7 @@ class Go < Command
       # Time passes...
       world.state.time += 9.minutes
       # Look at the new surroundings
-      return Look.new.run(world, nil)
+      return Look.new.run(world, ['go-look'])
     else
       # No exit
       return world, [SideEffect::Message.new("Cannot go '#{dir}' from here.")]

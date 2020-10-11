@@ -1,0 +1,37 @@
+---
+- name: Cove Shores
+  id: 1
+  text: |
+    You stand alone on the beach. It's sunny, slightly breezey and fairly calm.
+    Gulls can be heard in the distance.
+  exits:
+    - dir: west
+      location_id: 2
+    - dir: north
+      location_id: 3
+  items:
+    - :driftwood
+    - :seashell
+
+- name: Cove Shallows
+  id: 2
+  text: |
+    You're waste deep in glittering blue water. Briney waves lap at your waste, and you're concerned your possesions may be getting drenched.
+  exits:
+    - dir: east
+      location_id: 1
+    - dir: north
+      location_id: 3
+  items:
+    - :seashell
+
+- name: North Pointe
+  id: 3
+  text: |
+    You're at the northern extent of this tiny island.
+    Here, the eastward beach ends amidst tumbled rocks and reeds.
+  exits:
+    - dir: south
+      location_id: 1
+  items:
+    - :flint

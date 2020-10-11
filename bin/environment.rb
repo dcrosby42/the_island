@@ -5,6 +5,8 @@ require 'bundler'
 Bundler.setup
 
 require 'time'
+require 'yaml'
 require 'attr_extras'
 require 'pry'
 require 'active_support/core_ext/numeric/time'
+require 'require_pattern'

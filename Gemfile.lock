@@ -78,7 +78,9 @@ DEPENDENCIES
   attr_extras
   damerau-levenshtein
   pry
+  rubocop
   solargraph
+  yard
 
 BUNDLED WITH
    2.1.4
