@@ -23,10 +23,10 @@ class Wait < Command
         end
       d = num.to_i.send(incr)
     end
-    world.state[:time] += d
+    world.state.time += d
 
     return world, [
-             SideEffect::Message.new("You sit, and wait patiently for a couple #{incr.to_s}.\n#{look_time world.state[:time]}"),
+             SideEffect::Message.new("You sit, and wait patiently for a couple #{incr.to_s}.\n#{look_time world.state.time}"),
            ]
   end
 end

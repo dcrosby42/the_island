@@ -13,7 +13,7 @@ module ItemHelper
     end
 
     if idx
-      return items[idx], idx
+    return items[idx], idx
     end
     return nil, nil
   end

@@ -29,9 +29,9 @@ class Go < Command
     end
     if ex
       # Move to new location
-      world.state[:location_id] = ex[:location_id]
+      world.state.location_id = ex[:location_id]
       # Time passes...
-      world.state[:time] += 9.minutes
+      world.state.time += 9.minutes
       # Look at the new surroundings
       return Look.new.run(world, nil)
     else

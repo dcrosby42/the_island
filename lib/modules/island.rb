@@ -11,12 +11,16 @@ class Player
   vattr_initialize [:inventory]
 end
 
+class State
+  attr_accessor :location_id, :time
+end
+
 class IslandWorld
   attr_accessor :state, :map, :log, :bag, :player
 
   def initialize
-    @map = {}
-    @state = {}
+    @map = {} # int => Location
+    @state = State.new
     @player = Player.new(inventory: Inventory.new(items: []))
     # @log = GameLog.new
     # puts "huh?"
@@ -29,7 +33,7 @@ module Island
   def create
     world = IslandWorld.new
 
-    beach = SimpleLocation.new(
+    beach = Location.new(
       id: 1,
       name: 'Cove Shores',
       text: "You stand alone on the beach. It's sunny, slightly breezey and fairly calm.\nGulls can be heard in the distance.",
@@ -42,7 +46,7 @@ module Island
         SeaShell.new,
       ],
     )
-    shallows = SimpleLocation.new(
+    shallows = Location.new(
       id: 2,
       name: 'Cove Shallows',
       text: "You're waste deep in glittering blue water. Briney waves lap at your waste, and you're concerned your possesions may be getting drenched.",
@@ -54,7 +58,7 @@ module Island
         SeaShell.new,
       ],
     )
-    point = SimpleLocation.new(
+    point = Location.new(
       id: 3,
       name: 'North Pointe',
       text: "You're at the northern extent of this tiny island.\nHere, the eastward beach ends amidst tumbled rocks and reeds.",
@@ -69,9 +73,8 @@ module Island
     world.map[1] = beach
     world.map[2] = shallows
     world.map[3] = point
-    world.state[:location_id] = 1
-
-    world.state[:time] = Time.parse('apr 24 1652 8:00am')
+    world.state.location_id = 1
+    world.state.time = Time.parse('apr 24 1652 8:00am')
 
     return Look.new.run(world, nil)
   end

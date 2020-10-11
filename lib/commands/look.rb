@@ -10,12 +10,12 @@ class Look < Command
     time = ''
 
     # Time
-    if world.state[:time]
-      time = " It's #{time_str world.state[:time]}"
+    if world.state.time
+      time = " It's #{time_str world.state.time}"
     end
 
     # Location
-    loc = world.map[world.state[:location_id]]
+    loc = world.map[world.state.location_id]
     text += "You are at #{loc.name}.#{time}\n#{loc.text}\n"
 
     # Items
