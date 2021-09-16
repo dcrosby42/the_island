@@ -1,6 +1,7 @@
 # Command: Go to a new location
 class Go < Command
   include MapHelper
+  include TimeHelper
 
   verb :go, :north, :east, :south, :west, :n, :e, :s, :w
 
@@ -31,11 +32,12 @@ class Go < Command
       # Move to new location
       world.state.location_id = ex[:location_id]
       # Time passes...
-      world.state.time += 9.minutes
+      world, fx = passage_of_time world, add: 9.minutes
       # Look at the new surroundings
-      return Look.new.run(world, ['go-look'])
+      world, fx2 = Look.new.run(world, ['go-look'])
+      return world, fx + fx2
     else
-      # No exit
+      # No exitk
       return world, [SideEffect::Message.new("Cannot go '#{dir}' from here.")]
     end
   end

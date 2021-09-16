@@ -9,10 +9,7 @@ class Look < Command
     text = ''
     time = ''
 
-    # Time
-    if world.state.time
-      time = " It's #{time_str world.state.time}"
-    end
+    time = " #{look_time world.state.time}"
 
     # Location
     loc = world.map[world.state.location_id]

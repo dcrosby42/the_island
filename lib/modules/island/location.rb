@@ -16,7 +16,7 @@ module Locations
       name: ldef[:name],
       text: ldef[:text].strip,
       exits: ldef[:exits],
-      items: ldef[:items].map(&method(:new_item)),
+      items: (ldef[:items] || []).map(&method(:new_item)),
     )
   end
 

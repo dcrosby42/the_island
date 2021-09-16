@@ -9,9 +9,11 @@
       location_id: 2
     - dir: north
       location_id: 3
-  items:
-    - :driftwood
-    - :seashell
+    - dir: east
+      location_id: 4
+  # items:
+  #   - :driftwood
+  #   - :seashell
 
 - name: Cove Shallows
   id: 2
@@ -35,3 +37,12 @@
       location_id: 1
   items:
     - :flint
+
+- name: Forest Edge
+  id: 4
+  text: |
+    You're near the edge of the jungle.  To the west, you see the Cove Shore.
+    Eastward, the darkness of the forest deepens...
+  exits:
+    - dir: west
+      location_id: 1
